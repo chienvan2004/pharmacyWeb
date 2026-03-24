@@ -68,6 +68,7 @@ const UsersPage: React.FC = () => {
             }
         };
         loadInitialData();
+        
     }, []);
 
     useEffect(() => {
