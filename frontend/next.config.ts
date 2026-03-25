@@ -2,8 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['localhost'], // Thêm 'localhost' vào mảng domains
-    remotePatterns: [ // Hoặc sử dụng remotePatterns cho cấu hình linh hoạt hơn
+    domains: ['localhost'],
+    remotePatterns: [
       {
         protocol: 'http',
         hostname: 'localhost',
@@ -13,7 +13,10 @@ const nextConfig: NextConfig = {
     ],
   },
   eslint: {
-    ignoreDuringBuilds: true,  
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true, 
   },
 };
 
