@@ -11,17 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('brands', function (Blueprint $table) {
-            $table->id();
-            $table->string('brand_name')->unique();
-            $table->string('slug', 255)->unique();
-            $table->text('description')->nullable();
-            $table->text('icon')->nullable();
-            $table->boolean('active')->default(true);
-            $table->unsignedBigInteger('created_by')->nullable();
-            $table->unsignedBigInteger('updated_by')->nullable();
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('brands')) {
+
+            Schema::create('brands', function (Blueprint $table) {
+                $table->id();
+                $table->string('brand_name')->unique();
+                $table->string('slug', 255)->unique();
+                $table->text('description')->nullable();
+                $table->text('icon')->nullable();
+                $table->boolean('active')->default(true);
+                $table->unsignedBigInteger('created_by')->nullable();
+                $table->unsignedBigInteger('updated_by')->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
