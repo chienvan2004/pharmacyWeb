@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (!Schema::hasTable('categories')) {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parent_id')->nullable();
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->foreign('parent_id')->references('id')->on('categories')->nullOnDelete();
             $table->timestamps();
         });
+        }
     }
 
     /**
