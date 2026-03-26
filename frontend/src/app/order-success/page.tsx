@@ -1,8 +1,9 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-export default function OrderSuccess() {
+function OrderSuccessContent() {
     const searchParams = useSearchParams();
     const orderId = searchParams.get('order_id');
 
@@ -17,5 +18,13 @@ export default function OrderSuccess() {
                 Về trang chủ
             </button>
         </div>
+    );
+}
+
+export default function OrderSuccess() {
+    return (
+        <Suspense fallback={<div className="flex items-center justify-center h-screen">Đang tải...</div>}>
+            <OrderSuccessContent />
+        </Suspense>
     );
 }
