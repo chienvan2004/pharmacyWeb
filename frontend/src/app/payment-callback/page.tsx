@@ -2,19 +2,18 @@
 
 import orderService from '@/services/orderService';
 import { useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 
-export default function PaymentCallback() {
+function PaymentCallbackContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
 
     useEffect(() => {
         const handleCallback = async () => {
-            // Lấy các tham số từ URL
             const params = Object.fromEntries(searchParams.entries());
-            const vnpParams: any = {
+            const vnpParams = {
                 vnp_Amount: parseInt(params.vnp_Amount || '0'),
                 vnp_BankCode: params.vnp_BankCode || '',
                 vnp_BankTranNo: params.vnp_BankTranNo || '',
@@ -51,5 +50,17 @@ export default function PaymentCallback() {
         <div className="flex items-center justify-center h-screen">
             <p className="text-lg">Đang xử lý thanh toán, vui lòng đợi...</p>
         </div>
+    );
+}
+
+export default function PaymentCallback() {
+    return (
+        <Suspense fallback={
+            <div className="flex items-center justify-center h-screen">
+                <p className="text-lg">Đang tải...</p>
+            </div>
+        }>
+            <PaymentCallbackContent />
+        </Suspense>
     );
 }
