@@ -9,7 +9,7 @@ export const metadata = {
   title: 'Nhà thuốc pharmary.com',
   description: 'Chào mừng bạn đến với Nhà thuốc ABC - Sản phẩm uy tín, chất lượng.',
   icons: {
-    icon: '/logo.jpg', // hoặc .svg, .ico tùy ý
+    icon: '/logo.jpg', 
   },
 };
 
@@ -19,7 +19,7 @@ export default async function Home() {
     <div className="font-sans text-gray-800 z-0">
       <div className="bg-white">
         <PromoBanner />
-        <CategoryIcons  />
+        <CategoryIcons />
       </div>
       <ProductSale />
       <ProductBestsaler />
