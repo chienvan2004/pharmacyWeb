@@ -33,7 +33,7 @@ RUN mkdir -p storage/framework/{sessions,views,cache,testing} \
     && chmod -R 777 storage bootstrap/cache
 
 # Tạo start script
-RUN printf '#!/bin/sh\nphp artisan migrate --force\nphp artisan config:cache\nphp artisan serve --host=0.0.0.0 --port=8000\n' > /app/start.sh \
+RUN printf '#!/bin/sh\nphp artisan migrate --force\nphp artisan config:cache\nphp artisan serve --host=0.0.0.0 --port=${PORT:-8000}\n' > /app/start.sh \
     && chmod +x /app/start.sh
 
 EXPOSE 8000
