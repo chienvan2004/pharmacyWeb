@@ -28,7 +28,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             ?.split('=')[1];
 
         if (!token) {
-            router.push('/admin');//sau test sửa lại chỗ này
+            router.push('/admin/login');//sau test sửa lại chỗ này
             return;
         }
 
