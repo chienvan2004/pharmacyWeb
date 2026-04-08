@@ -7,6 +7,7 @@ use App\Http\Requests\BrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
 use App\Imports\BrandImport;
 use App\Models\Brand;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -44,11 +45,19 @@ class BrandController extends Controller
         try {
             $data = $request->validated();
 
+            // if ($request->hasFile('icon')) {
+            //     $iconPath = $request->file('icon')->store('brand', 'public');
+            //     $data['icon'] = 'storage/' . $iconPath;
+            // }
             if ($request->hasFile('icon')) {
-                $iconPath = $request->file('icon')->store('brand', 'public');
-                $data['icon'] = 'storage/' . $iconPath;
-            }
+                // Tải lên Cloudinary vào thư mục 'brands'
+                $uploaded = Cloudinary::upload($request->file('icon')->getRealPath(), [
+                    'folder' => 'brands'
+                ]);
 
+                // Lưu URL bảo mật vào database
+                $data['icon'] = $uploaded->getSecurePath();
+            }
             $data['created_by'] = Auth::id();
             $data['updated_by'] = Auth::id();
 
