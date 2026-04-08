@@ -135,8 +135,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'status' => 'error',
-                'message' => 'Lỗi khi tạo sản phẩm: ' . $e->getMessage()
+                'error' => $e->getMessage()
             ], 500);
         }
     }
