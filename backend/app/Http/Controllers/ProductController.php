@@ -96,34 +96,35 @@ class ProductController extends Controller
 
 
             // Lưu hình ảnh
-            // if ($request->hasFile('images')) {
-            //     foreach ($request->file('images') as $index => $image) {
-            //         $path = $image->store('product', 'public');
-
-            //         $product->images()->create([
-            //             'image' => 'storage/' . $path,
-            //             'is_main' => $request->input('is_main') == $index ? true : false,
-            //         ]);
-            //     }
-            // }
             if ($request->hasFile('images')) {
-                // Nếu ảnh mới được đánh dấu là ảnh chính, hãy bỏ đánh dấu ảnh chính cũ (chỉ dùng cho Update)
-                if ($request->has('is_main')) {
-                    $product->images()->update(['is_main' => false]);
-                }
-
                 foreach ($request->file('images') as $index => $image) {
-                    $uploaded = Cloudinary::upload($image->getRealPath(), [
-                        'folder' => 'product'
-                    ]);
+                    $path = $image->store('product', 'public');
 
                     $product->images()->create([
-                        'image' => $uploaded->getSecurePath(),
-                        // Ép kiểu về int để so sánh chính xác hơn
-                        'is_main' => (int)$request->input('is_main') === $index,
+                        'image' => 'storage/' . $path,
+                        'is_main' => $request->input('is_main') == $index ? true : false,
                     ]);
                 }
             }
+            
+            // if ($request->hasFile('images')) {
+            //     // Nếu ảnh mới được đánh dấu là ảnh chính, hãy bỏ đánh dấu ảnh chính cũ (chỉ dùng cho Update)
+            //     if ($request->has('is_main')) {
+            //         $product->images()->update(['is_main' => false]);
+            //     }
+
+            //     foreach ($request->file('images') as $index => $image) {
+            //         $uploaded = Cloudinary::upload($image->getRealPath(), [
+            //             'folder' => 'product'
+            //         ]);
+
+            //         $product->images()->create([
+            //             'image' => $uploaded->getSecurePath(),
+            //             // Ép kiểu về int để so sánh chính xác hơn
+            //             'is_main' => (int)$request->input('is_main') === $index,
+            //         ]);
+            //     }
+            // }
 
             DB::commit();
 
