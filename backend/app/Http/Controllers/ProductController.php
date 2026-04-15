@@ -96,17 +96,29 @@ class ProductController extends Controller
 
 
             // Lưu hình ảnh
+            // if ($request->hasFile('images')) {
+            //     foreach ($request->file('images') as $index => $image) {
+            //         $path = $image->store('product', 'public');
+
+            //         $product->images()->create([
+            //             'image' => 'storage/' . $path,
+            //             'is_main' => $request->input('is_main') == $index ? true : false,
+            //         ]);
+            //     }
+            // }
+
             if ($request->hasFile('images')) {
                 foreach ($request->file('images') as $index => $image) {
-                    $path = $image->store('product', 'public');
+                    // Tải ảnh lên Cloudinary
+                    $uploadedFileUrl = $image->storeOnCloudinary('products')->getSecurePath();
 
                     $product->images()->create([
-                        'image' => 'storage/' . $path,
+                        'image' => $uploadedFileUrl,
                         'is_main' => $request->input('is_main') == $index ? true : false,
                     ]);
                 }
             }
-            
+
             // if ($request->hasFile('images')) {
             //     // Nếu ảnh mới được đánh dấu là ảnh chính, hãy bỏ đánh dấu ảnh chính cũ (chỉ dùng cho Update)
             //     if ($request->has('is_main')) {
