@@ -129,7 +129,7 @@ class ProductController extends Controller
             }
 
             DB::commit();
-
+            dd(config('cloudinary'));
             return response()->json([
                 'status' => 'success',
                 'message' => 'Sản phẩm được tạo thành công.',
